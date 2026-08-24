@@ -10,6 +10,9 @@ pipeline {
             steps {
                 sh 'rm -rf node_modules'
                 sh 'npm cache clean --force'
+                sh 'npm config set fetch-timeout 300000'
+                sh 'npm config set fetch-retries 5'
+                sh 'npm config set fetch-retry-mintimeout 20000'
                 sh 'npm install'
             }
         }
