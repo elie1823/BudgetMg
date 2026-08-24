@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     stages {
         stage('Checkout') {
             steps {
@@ -9,6 +8,8 @@ pipeline {
         }
         stage('Install dependencies') {
             steps {
+                sh 'rm -rf node_modules'
+                sh 'npm cache clean --force'
                 sh 'npm install'
             }
         }
@@ -18,7 +19,6 @@ pipeline {
             }
         }
     }
-
     post {
         success {
             echo 'Pipeline terminé avec succès !'
