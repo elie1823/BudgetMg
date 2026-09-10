@@ -1,3 +1,4 @@
+cat > Jenkinsfile << 'EOF'
 pipeline {
     agent any
     stages {
@@ -33,6 +34,18 @@ pipeline {
                 }
             }
         }
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t budgetmg-app:latest .'
+            }
+        }
+        stage('Docker Deploy') {
+            steps {
+                sh 'docker stop budgetmg-container || true'
+                sh 'docker rm budgetmg-container || true'
+                sh 'docker run -d --name budgetmg-container -p 8081:80 budgetmg-app:latest'
+            }
+        }
     }
     post {
         success {
@@ -43,3 +56,4 @@ pipeline {
         }
     }
 }
+EOF
