@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    options {
+        disableConcurrentBuilds()
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -35,7 +38,12 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-                sh 'docker build -t budgetmg-app:latest .'
+                withCredentials([
+                    string(credentialsId: 'supabase-url', variable: 'SUPABASE_URL'),
+                    string(credentialsId: 'supabase-anon-key', variable: 'SUPABASE_ANON_KEY')
+                ]) {
+                    sh 'docker build --build-arg VITE_SUPABASE_URL=$SUPABASE_URL --build-arg VITE_SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY -t budgetmg-app:latest .'
+                }
             }
         }
         stage('Docker Deploy') {
