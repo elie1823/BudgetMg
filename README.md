@@ -133,5 +133,12 @@ bien à votre projet (Project Settings → API), et que le fichier `.env.local`
 est à la racine du projet (au même niveau que `package.json`), pas dans `src/`.
 Test webhook Tue Sep  8 09:11:40 AM CEST 2026
 
-Finalement
-Déployé sur https://budgetmg.duckdns.org
+## Déploiement
+
+L'application est déployée sur AWS EC2 (Docker + Nginx) :
+https://budgetmg.duckdns.org
+
+- Chaque `push` sur la branche `master` déclenche GitHub Actions.
+- Le workflow se connecte en SSH au serveur, reconstruit l'image Docker et relance le conteneur.
+- HTTPS : certificat Let's Encrypt, renouvelé automatiquement.
+- Backend : Supabase (Postgres + Auth).
