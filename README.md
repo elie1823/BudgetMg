@@ -133,4 +133,5 @@ bien à votre projet (Project Settings → API), et que le fichier `.env.local`
 est à la racine du projet (au même niveau que `package.json`), pas dans `src/`.
 Test webhook Tue Sep  8 09:11:40 AM CEST 2026
 
+Finalement
 Déployé sur https://budgetmg.duckdns.org
